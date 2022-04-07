@@ -1,0 +1,56 @@
+- hosts: rpm
+  
+  tasks: 
+    - name: find the filebeat*.rpm file name
+      connection: local
+      shell: "ls -t ../files/*.rpm | head -1"
+      register: filebeat_rpm_file
+
+    - name: find the filebeat.yml file name 
+      connection: local
+      shell: "ls -t ../files/filebeat.yml | head -1"
+      register: filebeat_yml_file
+
+    - name: find the system.yml file name
+      connection: local
+      shell: "ls -t ../files/system.yml | head -1"
+      register: system_yml_file
+
+    - name: mkdir /tmp/FILEBEAT
+      file: path=/tmp/FILEBEAT state=directory
+    
+    - name: Copy filebeat rpm file 
+      copy:
+        src: "{{ filebeat_rpm_file.stdout }}"
+        dest: /tmp/FILEBEAT/filebeat.rpm
+
+    - name: Copy filebeat.yml file
+      copy:
+        src: "{{ filebeat_yml_file.stdout }}"
+        dest: /tmp/FILEBEAT/filebeat.yml
+
+    - name: Copy system.yml file
+      copy:
+        src: "{{ system_yml_file.stdout }}"
+        dest: /tmp/FILEBEAT/system.yml
+  
+    - name: Install filebeat
+      shell: dnf install /tmp/FILEBEAT/filebeat.rpm -y
+      become: yes
+
+    - name: Enable filebeat system module
+      shell: filebeat modules enable system
+      become: yes
+
+    - name: Locate configuration files
+      shell: cp /tmp/FILEBEAT/filebeat.yml /etc/filebeat/; cp /tmp/FILEBEAT/system.yml /etc/filebeat/modules.d/
+      become: yes
+
+    - name: Set the permissions of configuration files
+      shell: chmod 544 /etc/filebeat/filebeat.yml; chmod 544 /etc/filebeat/modules.d/system.yml 
+      become: yes
+
+    - name: Restart filebeat service   
+      shell: systemctl restart filebeat                                             
+      become: yes
+

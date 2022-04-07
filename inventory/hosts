@@ -1,0 +1,7 @@
+[rpm]
+10.20.30.40 ansible_ssh_user=test ansible_ssh_pass=1 ansible_sudo_pass=1
+10.20.30.41 ansible_ssh_user=test ansible_ssh_pass=1 ansible_sudo_pass=1
+
+[deb]
+10.20.30.50 ansible_ssh_user=test ansible_ssh_pass=1 ansible_sudo_pass=1
+10.20.30.51 ansible_ssh_user=test ansible_ssh_pass=1 ansible_sudo_pass=1

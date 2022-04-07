@@ -1,0 +1,11 @@
+---
+ - name: "Get Hostnames"
+   hosts: all
+   tasks:
+    - name: Get hostname
+      shell: hostname
+      register: result
+
+    - name: Print the var
+      debug:
+        var: result.stdout
