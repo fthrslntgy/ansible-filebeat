@@ -48,13 +48,13 @@ sudo nano /opt/ansible-filebeat/files/filebeat.yml
 - Debian tabanlı işletim sistemlerine (hosts dosyasında **[deb]** başlığı altında girilen makineler) dağıtım için aşağıdaki komut çalıştırılır.
 
 ```
-ansible-playbook /opt/ansible-mico/playbooks/deb.yml
+ansible-playbook /opt/ansible-filebeat/playbooks/deb.yml
 ```
 
 - RPM tabanlı işletim sistemlerine (hosts dosyasında **[rpm]** başlığı altında girilen makineler) dağıtım için aşağıdaki komut çalıştırılır.
 
 ```
-ansible-playbook /opt/ansible-mico/playbooks/rpm.yml
+ansible-playbook /opt/ansible-filebeat/playbooks/rpm.yml
 ```
 
 
